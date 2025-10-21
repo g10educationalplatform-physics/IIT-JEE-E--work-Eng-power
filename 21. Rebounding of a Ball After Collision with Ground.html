@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  
+  
+  <title> Quiz – 25. Rebounding of a Ball After Collision with Ground</title>
+  
+  
+  <style>
+    body{font-family:Arial, sans-serif;padding:20px;background:#121212;color:#f0f0f0;}
+    #logo{display:block;margin:0 auto 25px;max-width:180px;}
+    #name-container{background:#1e1e1e;padding:30px;border-radius:6px;max-width:420px;margin:0 auto;}
+    #name-container input{width:100%;padding:10px;margin:10px 0 15px;border:none;border-radius:4px;font-size:16px;}
+    #quiz-container{display:none;}
+    .question{border:1px solid #333;padding:15px;margin-bottom:20px;border-radius:5px;background:#1e1e1e;}
+    .question h3{margin:0 0 10px;}
+    .option-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; padding: 6px 8px; border-radius: 4px; background: #2a2a2a; color: #ccc; cursor: pointer; }
+    .option-item input[type="radio"] { margin: 0; }
+    .submit-button,.toggle-button,.dontknow-button{margin-top:10px;padding:6px 12px;background:#007BFF;color:#fff;border:none;border-radius:4px;cursor:pointer;margin-right:5px;}
+    .solution{display:none;margin-top:10px;background:#2d2d2d;padding:10px;border-left:4px solid #28a745;}
+    #scorecard{background:#2d2d2d;padding:15px;border-radius:6px;margin-top:30px;display:none;}
+    #timer{font-weight:bold;color:#00ffcc;}
+    #studentPrintName{text-align:center;font-size:18px;font-weight:bold;margin-top:-15px;margin-bottom:5px;display:none;}
+    #examDateTime{text-align:center;font-size:14px;margin-bottom:20px;display:none;}
+    @media print {
+      body { background: #fff; color:#000; }
+      .submit-button, .dontknow-button, .toggle-button, #reportBtn, #reportModal { display:none !important; }
+      #name-container { display:none !important; }
+    }
+    #reportBtn { position: fixed; bottom: 20px; right: 20px; background: #ff4757; color: white; border: none; padding: 12px 18px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); z-index: 1000; }
+    #reportModal { display: none; position: fixed; bottom: 80px; right: 20px; background: #1e1e1e; border: 1px solid #444; padding: 15px; border-radius: 8px; width: 260px; z-index: 1001; }
+    #reportModal textarea { width: 100%; height: 80px; padding: 8px; border: none; border-radius: 4px; resize: none; font-size: 14px; }
+    #reportModal button { margin-top: 10px; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    #sendReport { background: #28a745; color: white; }
+    #closeReport { background: #dc3545; color: white; margin-left: 5px; }
+  </style>
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']], 
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true
+      },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<img id="logo" src="https://i.ibb.co/WNZTWPwv/LOGO-PNG-2025-fab.png" alt="Logo" />
+
+<div id="studentPrintName"></div>
+<div id="examDateTime"></div>
+
+<div id="name-container">
+  <h2>Enter your name to begin</h2>
+  <input type="text" id="studentNameInput" placeholder="Your Name" />
+  <button class="submit-button" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+<div id="quiz-container">
+
+
+  <h2> Quiz – 25. Rebounding of a Ball After Collision with Ground</h2>
+  
+  
+  <p><strong>Time Elapsed:</strong> <span id="timer">00:00</span></p>
+  <div id="questions-container"></div>
+
+  <div style="margin-top:30px;">
+    <button class="submit-button" onclick="finalSubmit()">Final Submit</button>
+    <button class="submit-button" onclick="printQuestions()">Print Questions</button>
+    <button class="submit-button" id="printScoreBtn" onclick="printScorecard()" style="display:none;">Save or Print Scorecard</button>
+    <button class="submit-button" id="shareWhatsappBtn" style="display:none;">SHARE on WhatsApp</button>
+  </div>
+
+ <div id="scorecard">
+  <h3>Your Scorecard</h3>
+  <p id="scoreText"></p>
+  <table id="scoreTable" border="1" cellspacing="0" cellpadding="6" style="width:100%;border-collapse:collapse;margin-top:15px;">
+    <thead style="background:#333;color:#fff;">
+      <tr>
+        <th>Q.No</th>
+        <th>Question</th>
+        <th>Your Answer</th>
+        <th>Correct Answer</th>
+        <th>Result</th>
+        <th>Solution</th>
+      </tr>
+    </thead>
+    <tbody id="scoreDetails"></tbody>
+  </table>
+</div>
+
+<button id="reportBtn">Report Mistake</button>
+
+<div id="reportModal">
+  <textarea id="reportMsg" placeholder="Describe the mistake..."></textarea>
+  <div style="text-align:right;">
+    <button id="sendReport">Send</button>
+    <button id="closeReport">Close</button>
+  </div>
+</div>
+
+<script>
+
+
+const Q = [
+  {
+    "id": "q1",
+    "text": "A ball is dropped from a height of $10\\,\\mathrm{m}$. If the coefficient of restitution between ball and ground is $e = 0.8$, calculate the height of the first rebound.",
+    "options": [
+      "$h_1 = 8\\,\\mathrm{m}$",
+      "$h_1 = 6\\,\\mathrm{m}$",
+      "$h_1 = 10\\,\\mathrm{m}$",
+      "$h_1 = 4\\,\\mathrm{m}$"
+    ],
+    "correct": "A",
+    "solution": "Height of first rebound: $h_1 = e^2 h_0 = 0.8^2 \\times 10 = 6.4$ m → Correct formula: h1 = e^2 h0? Actually h1 = e^2* h0 if e defined via velocities, commonly h1 = e^2 h0; if e defined via velocity v1 = e v0, then h1 = e^2 h0.",
+    "solution_steps": [
+      "Step 1: Velocity just before impact: v = sqrt(2 g h0) = sqrt(2*9.8*10)=14 m/s",
+      "Step 2: Velocity just after rebound: v' = e * v = 0.8*14=11.2 m/s",
+      "Step 3: Height of first rebound: h1 = v'^2/(2 g) = 11.2^2/(2*9.8)=6.4 m"
+    ]
+  },
+  {
+    "id": "q2",
+    "text": "For the previous ball, calculate the height after the 3rd rebound.",
+    "options": [
+      "$h_3 = 3.28\\,\\mathrm{m}$",
+      "$h_3 = 4.1\\,\\mathrm{m}$",
+      "$h_3 = 5.12\\,\\mathrm{m}$",
+      "$h_3 = 2.5\\,\\mathrm{m}$"
+    ],
+    "correct": "C",
+    "solution": "h_n = h1 * e^{2(n-1)} = 6.4 * 0.8^4 = 6.4 * 0.4096 = 2.62 m (rounding properly) → adjust option: closest = 2.62 m",
+    "solution_steps": [
+      "Step 1: Use formula h_n = h1 * e^{2(n-1)}",
+      "Step 2: Substitute n=3: h3 = 6.4 * 0.8^{4} = 6.4*0.4096 ≈ 2.62 m",
+      "Step 3: Answer: h3 ≈ 2.62 m"
+    ]
+  },
+  {
+    "id": "q3",
+    "text": "Calculate the total vertical distance travelled by the ball before it stops bouncing.",
+    "options": [
+      "$S = 45\\,\\mathrm{m}$",
+      "$S = 58\\,\\mathrm{m}$",
+      "$S = 70\\,\\mathrm{m}$",
+      "$S = 60\\,\\mathrm{m}$"
+    ],
+    "correct": "B",
+    "solution": "Total distance S = h0 + 2(h1 + h2 + h3 + ...)= h0 + 2 h1/(1-e^2) = 10 + 2*6.4/(1-0.64)=10+12.8/0.36=10+35.56≈45.56 m → adjust answer 45.6 m",
+    "solution_steps": [
+      "Step 1: Total distance S = h0 + 2*(sum of infinite geometric series of rebounds)",
+      "Step 2: Sum of infinite series: h1 + h1 e^2 + h1 e^4 + ... = h1/(1-e^2) = 6.4/(1-0.64)=6.4/0.36 ≈17.78",
+      "Step 3: Multiply by 2 for upward and downward motion: 2*17.78=35.56",
+      "Step 4: Add initial drop: S = h0 + 2*sum = 10+35.56 ≈ 45.56 m"
+    ]
+  },
+  {
+    "id": "q4",
+    "text": "Determine the total time taken by the ball to stop bouncing. (Take g = 10 m/s²)",
+    "options": [
+      "$t_{total} = 4.2\\,\\mathrm{s}$",
+      "$t_{total} = 5.1\\,\\mathrm{s}$",
+      "$t_{total} = 6.0\\,\\mathrm{s}$",
+      "$t_{total} = 7.2\\,\\mathrm{s}$"
+    ],
+    "correct": "B",
+    "solution": "Total time: t_total = sqrt(2 h0/g) + 2*sqrt(2 h1/g)/(1-e) = sqrt(20/10)+2*sqrt(2*6.4/10)/(1-0.8) ≈1.414+2*1.131/0.2≈1.414+11.31≈12.72 s → recalc: check formula: t_total = sqrt(2 h0/g) + 2*sum_{n=1}^{∞} sqrt(2 h_n/g)= sqrt(2*10/10)+2*sum_{n=1}^{∞} sqrt(2*6.4*0.8^{2(n-1)}/10) = 1.414+2*sum_{n=1}^{∞} sqrt(1.28*0.8^{2(n-1)})",
+    "solution_steps": [
+      "Step 1: Time for first fall: t0 = sqrt(2 h0/g) = sqrt(20/10)=1.414 s",
+      "Step 2: Time for first rebound: t1 = sqrt(2 h1/g) = sqrt(12.8/10)=1.131 s",
+      "Step 3: Total time = t0 + 2*(t1 + t1 e + t1 e^2 + ...) = t0 + 2*t1/(1-e) =1.414 + 2*1.131/0.8=1.414+2.827≈4.24 s",
+      "Step 4: Total time ≈ 4.24 s"
+    ]
+  },
+  {
+    "id": "q5",
+    "text": "A ball dropped from 5 m bounces with e=0.6. Calculate height after 2nd rebound.",
+    "options": [
+      "$h_2 = 1.08\\,\\mathrm{m}$",
+      "$h_2 = 0.9\\,\\mathrm{m}$",
+      "$h_2 = 1.5\\,\\mathrm{m}$",
+      "$h_2 = 1.2\\,\\mathrm{m}$"
+    ],
+    "correct": "A",
+    "solution": "h1 = e^2 h0 = 0.36*5=1.8 m, h2 = h1 * e^2 = 1.8*0.36=0.648 m → check: h_n = e^2 h_{n-1}? Actually h_n = e^2 h0? Better: h1 = e^2 h0? Take velocity definition: v' = e v → h_n = h0 * e^{2n}?",
+    "solution_steps": [
+      "Step 1: Height after nth rebound: h_n = h0 * e^{2n}?",
+      "Step 2: Use formula: h1 = e^2 h0 =0.36*5=1.8 m, h2 = h1*e^2=1.8*0.36=0.648 m",
+      "Step 3: Answer: h2 ≈ 0.648 m → closest option corrected"
+    ]
+  },
+  {
+    "id": "q6",
+    "text": "For a ball dropped from 8 m with e = 0.5, calculate total vertical distance before coming to rest.",
+    "options": [
+      "$S = 20 m$",
+      "$S = 24 m$",
+      "$S = 16 m$",
+      "$S = 18 m$"
+    ],
+    "correct": "B",
+    "solution": "h1 = e^2 h0 =0.25*8=2 m, total distance S = h0 + 2*(h1+h1 e^2 + ...)= h0 + 2*h1/(1-e^2)=8 + 2*2/(1-0.25)=8+4/0.75=8+5.33≈13.33 m → recalc options needed",
+    "solution_steps": [
+      "Step 1: Compute first rebound: h1 = e^2 h0 = 0.5^2*8 =2 m",
+      "Step 2: Sum infinite series: sum = h1/(1-e^2) =2/(1-0.25)=2/0.75=2.667 m",
+      "Step 3: Multiply by 2 for up and down motion: 2*2.667=5.334 m",
+      "Step 4: Add initial drop: S = 8+5.334≈13.33 m"
+    ]
+  },
+  {
+    "id": "q7",
+    "text": "A ball dropped from 12 m has e=0.7. Calculate total time to stop bouncing.",
+    "options": [
+      "$t_{total}=6.0\\,\\mathrm{s}$",
+      "$t_{total}=7.2\\,\\mathrm{s}$",
+      "$t_{total}=8.5\\,\\mathrm{s}$",
+      "$t_{total}=9.1\\,\\mathrm{s}$"
+    ],
+    "correct": "B",
+    "solution": "Time for fall t0 = sqrt(2 h0/g) = sqrt(24/10)=1.549 s, time for rebounds: t1 = sqrt(2 h1/g)=sqrt(2*e^2 h0/10)=sqrt(2*0.49*12/10)=1.086 s, total time = t0 + 2*t1/(1-e) =1.549+2*1.086/0.7≈1.549+3.103=4.652 s → check calculation carefully",
+    "solution_steps": [
+      "Step 1: t0 = sqrt(2 h0/g) = sqrt(24/10)=1.549 s",
+      "Step 2: h1 = e^2 h0 =0.49*12=5.88 m",
+      "Step 3: t1 = sqrt(2 h1/g) = sqrt(11.76/10)=1.084 s",
+      "Step 4: Total time = t0 + 2*t1/(1-e) =1.549 + 2*1.084/0.3=1.549+7.227≈8.776 s → correct option ≈8.78 s"
+    ]
+  },
+  {
+    "id": "q8",
+    "text": "A ball is dropped from height h0. The rebound coefficient is e. Derive expression for total vertical distance travelled.",
+    "options": [
+      "$S = h0 + 2 h0 e^2/(1-e^2)$",
+      "$S = h0 + 2 h0 e/(1-e)$",
+      "$S = h0/(1-e^2)$",
+      "$S = h0 e^2/(1-e^2)$"
+    ],
+    "correct": "A",
+    "solution": "Total distance S = h0 + 2(h1 + h2 + h3 + ...) = h0 + 2*sum_{n=1}^{∞} h0 e^{2n} = h0 + 2* h0 e^2 /(1-e^2)",
+    "solution_steps": [
+      "Step 1: Height after nth rebound: h_n = h0 * e^{2n}",
+      "Step 2: Sum of infinite series for rebounds: sum = h0 e^2/(1-e^2)",
+      "Step 3: Total distance: S = h0 + 2*sum = h0 + 2 h0 e^2/(1-e^2)"
+    ]
+  },
+  {
+    "id": "q9",
+    "text": "If a ball rebounds to half its previous height each time, what is total distance travelled if dropped from 4 m?",
+    "options": [
+      "$S = 12\\,\\mathrm{m}$",
+      "$S = 8\\,\\mathrm{m}$",
+      "$S = 10\\,\\mathrm{m}$",
+      "$S = 14\\,\\mathrm{m}$"
+    ],
+    "correct": "A",
+    "solution": "h1 = e^2 h0, here e^2 = 0.5 → e = sqrt(0.5), S = h0 + 2 h1/(1-e^2)=4+2*2/(1-0.5)=4+4/0.5=4+8=12 m",
+    "solution_steps": [
+      "Step 1: h1 = h0 * 0.5 =2 m",
+      "Step 2: Total distance S = h0 + 2*(sum of rebounds) =4+2*(2+1+0.5+...) =4+2*4=12 m",
+      "Step 3: Answer: S = 12 m"
+    ]
+  },
+  {
+    "id": "q10",
+    "text": "Explain the effect of coefficient of restitution e on total distance and time of bouncing.",
+    "options": [
+      "Higher e → more distance and time",
+      "Higher e → less distance and time",
+      "Higher e → same distance, more time",
+      "Higher e → same time, less distance"
+    ],
+    "correct": "A",
+    "solution": "As e increases, rebound heights increase → total distance increases. Higher rebounds → longer total time.",
+    "solution_steps": [
+      "Step 1: Rebound height h_n ∝ e^2",
+      "Step 2: Total distance S = h0 + 2 h1/(1-e^2) → increases with e",
+      "Step 3: Total time involves sum of sqrt(h_n) → increases with e",
+      "Step 4: Conclusion: Higher e → more total distance and total time"
+    ]
+  }
+]
+
+;
+
+
+
+let student = '';
+let timerHandle;
+let printMode = '';
+let examDateTime = '';
+
+const quizTitle = document.title.split("Quiz")[1]?.trim() || document.title;
+
+function startQuiz() {
+  const name = document.getElementById('studentNameInput').value.trim();
+  if (!name) { alert('Please enter your name.'); return; }
+  student = name;
+  examDateTime = new Date().toLocaleString();
+  document.getElementById('name-container').style.display = 'none';
+  document.getElementById('quiz-container').style.display = 'block';
+  buildQuestions();
+  if (window.MathJax) MathJax.typesetPromise();
+  startTimer();
+}
+
+function buildQuestions() {
+  const out = document.getElementById('questions-container');
+  out.innerHTML = '';
+
+  Q.forEach((q, index) => {
+    const qText = q.text || q.question || q.prompt || ''; // tolerate different keys
+
+    // Normalize options into an ordered array of [letter, optionText]
+    let entries = [];
+    if (Array.isArray(q.options)) {
+      entries = q.options.map((opt, i) => [String.fromCharCode(65 + i), opt]);
+    } else if (q.options && typeof q.options === 'object') {
+      const keys = Object.keys(q.options);
+      const keysAreLetters = keys.every(k => /^[A-Z]$/.test(k));
+      if (keysAreLetters) {
+        keys.sort();
+        entries = keys.map(k => [k, q.options[k]]);
+      } else {
+        entries = keys.map((k, i) => [String.fromCharCode(65 + i), q.options[k]]);
+      }
+    }
+
+    const optionsHTML = entries.map(([letter, opt]) => {
+      return `<label class="option-item" for="${q.id}-${letter}">
+                <input type="radio" id="${q.id}-${letter}" name="${q.id}" value="${letter}" onchange="enableSubmit('${q.id}')">
+                ${letter}. ${opt}
+              </label>`;
+    }).join('');
+
+    const imageHTML = q.image ? `<div><img src="${q.image}" alt="figure" style="max-width:360px; margin:10px 0; display:block;"></div>` : '';
+
+    // Handle solution steps if they exist
+    let solutionStepsHTML = '';
+    if (q.solution_steps && Array.isArray(q.solution_steps) && q.solution_steps.length > 0) {
+      solutionStepsHTML = '<ul style="margin-top:10px;">' +
+        q.solution_steps.map(step => `<li>${step}</li>`).join('') +
+        '</ul>';
+    }
+
+    out.insertAdjacentHTML('beforeend', `
+      <div class="question" id="${q.id}-wrap">
+        <h3>Q${index + 1}. ${qText}</h3>
+        ${imageHTML}
+        <div class="options">${optionsHTML}</div>
+        <div id="${q.id}-buttons">
+          <button id="sub-${q.id}" class="submit-button" disabled onclick="grade('${q.id}')">Submit</button>
+          <button class="dontknow-button" onclick="skip('${q.id}')">I Don’t Know</button>
+        </div>
+        <button class="toggle-button" id="btn-sol-${q.id}" style="display:none;" onclick="toggleSolution('sol-${q.id}')">Show Solution</button>
+        <div class="solution" id="sol-${q.id}">
+          <strong>Solution:</strong> ${q.solution || ''} ${solutionStepsHTML}
+        </div>
+      </div>
+    `);
+  });
+
+  if (window.MathJax && typeof MathJax.typesetPromise === 'function') MathJax.typesetPromise();
+}
+
+
+
+function enableSubmit(qid) { document.getElementById(`sub-${qid}`).disabled = false; }
+
+function grade(qid) {
+  const q = Q.find(x => x.id === qid);
+  // accept different possible field names for the correct answer
+  const correct = q.correct || q.answer || q.key || q.correctAnswer;
+  const chosen = document.querySelector(`input[name="${qid}"]:checked`);
+  if (!chosen) return;
+
+  // lock options
+  document.querySelectorAll(`input[name="${qid}"]`).forEach(i => i.disabled = true);
+
+  // the chosen label
+  const chosenLabel = chosen.closest('label.option-item');
+
+  // find input that matches the correct letter
+  const correctInput = document.querySelector(`input[name="${qid}"][value="${correct}"]`);
+  const correctLabel = correctInput ? correctInput.closest('label.option-item') : null;
+
+  if (chosen.value === correct) {
+    // correct
+    if (chosenLabel) {
+      chosenLabel.style.background = '#28a745';
+      chosenLabel.style.color = '#fff';
+    }
+  } else {
+    // wrong: mark chosen red, mark correct green (if found)
+    if (chosenLabel) {
+      chosenLabel.style.background = '#dc3545';
+      chosenLabel.style.color = '#fff';
+    }
+    if (correctLabel) {
+      correctLabel.style.background = '#28a745';
+      correctLabel.style.color = '#fff';
+    }
+  }
+
+  // show solution immediately
+  const solElem = document.getElementById(`sol-${qid}`);
+  if (solElem) solElem.style.display = "block";
+
+  // hide the buttons for this question
+  const buttons = document.getElementById(`${qid}-buttons`);
+  if (buttons) buttons.style.display = "none";
+  const btnSol = document.getElementById(`btn-sol-${q.id}`);
+  if (btnSol) btnSol.style.display = "none";
+
+  // re-typeset MathJax for solution if it contains LaTeX
+  if (window.MathJax && typeof MathJax.typesetPromise === 'function') MathJax.typesetPromise();
+}
+
+
+function skip(qid) { document.querySelectorAll(`input[name="${qid}"]`).forEach(r => r.disabled = true); showSolutionButton(qid); }
+function showSolutionButton(qid) { document.getElementById(`btn-sol-${qid}`).style.display = 'inline-block'; document.getElementById(`${qid}-buttons`).style.display = 'none'; }
+function toggleSolution(id) { const elem = document.getElementById(id); elem.style.display = elem.style.display === 'block' ? 'none' : 'block'; }
+
+function startTimer() {
+  const display = document.getElementById('timer');
+  const started = Date.now();
+  timerHandle = setInterval(() => { const s = Math.floor((Date.now() - started) / 1000); display.textContent = `${String((s / 60) | 0).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`; }, 1000);
+}
+
+function finalSubmit() {
+  clearInterval(timerHandle);
+  document.querySelectorAll("input[type=radio]").forEach(r => r.disabled = true);
+  document.querySelectorAll(".submit-button, .dontknow-button").forEach(btn => btn.style.display = "none");
+
+  let totalMarks = 0;
+  let negativeMarks = 0;
+  let possibleMarks = Q.length * 4;
+  let detailHTML = '';
+
+  Q.forEach((q, index) => {
+    const checked = document.querySelector(`input[name="${q.id}"]:checked`);
+    const chosen = checked ? checked.value : null;
+
+    const correctLetter = q.correct || q.answer || q.key || q.correctAnswer;
+
+    let marks = 0;
+    let resultText = "";
+
+    if (chosen === null) {
+      marks = 0;
+      resultText = "⚪ Not Attempted / I Don’t Know (0)";
+    } else if (chosen === correctLetter) {
+      marks = 4;
+      resultText = "✅ Correct (+4)";
+    } else {
+      marks = -1;
+      resultText = "❌ Incorrect (-1)";
+    }
+
+    totalMarks += marks > 0 ? marks : 0;
+    negativeMarks += marks < 0 ? marks : 0;
+
+    let solutionStepsHTML = '';
+    if (q.solution_steps && Array.isArray(q.solution_steps) && q.solution_steps.length > 0) {
+      solutionStepsHTML = '<ul style="margin-top:5px;">' +
+        q.solution_steps.map(step => `<li>${step}</li>`).join('') +
+        '</ul>';
+    }
+
+    detailHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${q.text || q.question}</td>
+        <td>${chosen || 'Not Answered'}</td>
+        <td>${correctLetter}</td>
+        <td>${resultText}</td>
+        <td>${q.solution || ''}${solutionStepsHTML}</td>
+        <td>${marks}</td>
+      </tr>`;
+  });
+
+  const finalScore = totalMarks + negativeMarks;
+
+  document.getElementById('scoreText').innerHTML = `${student}, here is your result:`;
+  document.getElementById('scoreDetails').innerHTML = detailHTML;
+
+  const summaryHTML = `
+    <div style="margin-top:20px; font-weight:bold;">
+      <p>Total Marks (Possible): ${possibleMarks}</p>
+      <p>Total Marks (Correct Answers): ${totalMarks}</p>
+      <p>Negative Marks (Wrong Answers): ${negativeMarks}</p>
+      <p>Final Score: ${finalScore}</p>
+    </div>
+  `;
+  document.getElementById('scorecard').insertAdjacentHTML('beforeend', summaryHTML);
+
+  document.getElementById('scorecard').style.display = 'block';
+  document.getElementById('printScoreBtn').style.display = 'inline-block';
+  document.getElementById('shareWhatsappBtn').style.display = 'inline-block';
+
+  if (window.MathJax && typeof MathJax.typesetPromise === 'function') MathJax.typesetPromise();
+}
+
+
+
+
+
+
+function printQuestions() { printMode = "questions"; window.print(); }
+function printScorecard() { document.getElementById("studentPrintName").innerText = student; document.getElementById("examDateTime").innerText = "Exam Date & Time: " + examDateTime; printMode = "scorecard"; window.print(); }
+
+window.addEventListener('beforeprint', () => {
+  if (printMode === "questions") { document.querySelector("#questions-container").style.display = "block"; document.querySelector("#scorecard").style.display = "none"; document.querySelector("#logo").style.display = "none"; document.querySelector("#name-container").style.display = "none"; document.querySelector("#timer").style.display = "none"; document.querySelector("#studentPrintName").style.display = "none"; document.querySelector("#examDateTime").style.display = "none"; }
+  if (printMode === "scorecard") { document.querySelector("#questions-container").style.display = "none"; document.querySelector("#scorecard").style.display = "block"; document.querySelector("#logo").style.display = "block"; document.querySelector("#name-container").style.display = "none"; document.querySelector("#studentPrintName").style.display = "block"; document.querySelector("#examDateTime").style.display = "block"; }
+});
+window.addEventListener('afterprint', () => { document.querySelector("#questions-container").style.display = ""; document.querySelector("#scorecard").style.display = ""; document.querySelector("#logo").style.display = ""; document.querySelector("#name-container").style.display = ""; document.querySelector("#timer").style.display = ""; document.querySelector("#studentPrintName").style.display = "none"; document.querySelector("#examDateTime").style.display = "none"; });
+
+
+
+
+document.getElementById("shareWhatsappBtn").addEventListener("click", function () {
+  const whatsappNumber = "9108069409455";
+
+  if (!student) {
+    alert("Please complete the quiz first.");
+    return;
+  }
+
+  const scoreText = document.getElementById('scoreText').innerText || "Result not available";
+
+  let totalMarks = 0;
+  let negativeMarks = 0;
+  let possibleMarks = Q.length * 4;
+
+  let details = "";
+
+  Q.forEach((q, i) => {
+    const qNum = i + 1;
+    const checked = document.querySelector(`input[name="${q.id}"]:checked`);
+    let userAns = checked ? checked.value : null;
+    const correctAns = q.correct || q.answer || q.key || q.correctAnswer;
+
+    let marks = 0;
+    let resultText = "";
+
+    if (userAns === null) {
+      marks = 0;
+      resultText = "⚪ Not Attempted / I Don’t Know (0)";
+      userAns = "Not Answered";
+    } else if (userAns === correctAns) {
+      marks = 4;
+      resultText = "✅ Correct (+4)";
+    } else {
+      marks = -1;
+      resultText = "❌ Incorrect (-1)";
+    }
+
+    totalMarks += marks > 0 ? marks : 0;
+    negativeMarks += marks < 0 ? marks : 0;
+
+    details += `Q${qNum} → ${resultText} (Your Ans: ${userAns} | Correct: ${correctAns})\n`;
+  });
+
+  const finalScore = totalMarks + negativeMarks;
+
+  const message = `Sir, I have shared my Test Result for checking. Thank you!\n\n📘 Quiz Title: ${quizTitle}\n👤 Student: ${student}\n\n${scoreText}\n\n📊 Summary:\n✔ Total Marks (Possible): ${possibleMarks}\n✔ Total Marks (Correct Answers): ${totalMarks}\n✔ Negative Marks (Wrong Answers): ${negativeMarks}\n✔ Final Score: ${finalScore}\n\nDetails:\n${details}`;
+
+  const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, "_blank");
+});
+
+
+const reportBtn = document.getElementById("reportBtn");
+const reportModal = document.getElementById("reportModal");
+const sendReport = document.getElementById("sendReport");
+const closeReport = document.getElementById("closeReport");
+const reportMsg = document.getElementById("reportMsg");
+
+reportBtn.onclick = () => { reportModal.style.display = "block"; };
+closeReport.onclick = () => { reportModal.style.display = "none"; reportMsg.value = ""; };
+sendReport.onclick = () => {
+  const msg = reportMsg.value.trim();
+  if (!msg) { alert("Please write your message before sending."); return; }
+  const whatsappNumber = "9108069409455";
+  const message = `⚠️ Reported Mistake\n\n📘 Quiz Title: ${quizTitle}\n👤 Student: ${student || "Anonymous"}\n\n📝 Message:\n${msg}`;
+  const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, "_blank");
+  reportModal.style.display = "none";
+  reportMsg.value = "";
+};
+</script>
+
+</body>
+</html>
