@@ -112,37 +112,176 @@
 const Q = [
   {
     "id": "q1",
-    "question": "Identify the part of the male reproductive system marked as X in the figure below.",
-    "image": "https://i.ibb.co/example/male-reproductive-system.png",
-    "options": {
-      "A": "Testis",
-       "B": "Vas deferens <img src='https://i.ibb.co/example/vas.png' style='max-height:40px;'>",
-      "C": "Seminal vesicle",
-      "D": "Ureter"
-    },
-    "answer": "B",
-    "solution": "The part marked as X is vas deferens.<br><img src='https://i.ibb.co/example/vas-solution.png' style='max-width:220px;'>",
-   "solution_steps": [
-      "Step 1: Rate refers to speed of chemical change.",
-      "Step 2: It can be expressed as $\\Delta [\\text{Reactant or Product}] / \\Delta t$.",
-      "Step 3: This measures how fast reactants are consumed or products formed."
+    "text": "Define a perfectly elastic head-on collision.",
+    "options": [
+      "Collision where only momentum is conserved",
+      "Collision where both momentum and kinetic energy are conserved along line of centers",
+      "Collision where bodies stick together",
+      "Collision in which kinetic energy is lost"
+    ],
+    "correct": "B",
+    "solution": "A perfectly elastic head-on collision conserves both momentum and kinetic energy along the line joining centers of colliding bodies.",
+    "solution_steps": [
+      "Step 1: Momentum conservation: $m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$",
+      "Step 2: Kinetic energy conservation: $\\tfrac{1}{2}m_1u_1^2 + \\tfrac{1}{2}m_2u_2^2 = \\tfrac{1}{2}m_1v_1^2 + \\tfrac{1}{2}m_2v_2^2$",
+      "Step 3: Collision occurs along a single line (1D)."
     ]
   },
-{
-    "id": "q3",
-    "text": "Which of the following quantities changes when a force is applied on a body?",
-    "options": ["Mass", "Momentum", "Density", "Temperature"],
+  {
+    "id": "q2",
+    "text": "In a head-on elastic collision, what is the relationship between the relative speed of approach and separation?",
+    "options": [
+      "$v_1 - v_2 = -(u_1 - u_2)$",
+      "$v_2 - v_1 = u_1 - u_2$",
+      "$v_1 + v_2 = u_1 + u_2$",
+      "$v_1/v_2 = u_1/u_2$"
+    ],
     "correct": "B",
-    "solution": "Force changes the momentum of a body according to Newton’s Second Law: $$\\vec{F} = \\frac{d\\vec{p}}{dt}$$."
+    "solution": "In a 1D elastic collision, relative speed of separation equals relative speed of approach.",
+    "solution_steps": [
+      "Step 1: Use conservation of momentum and energy.",
+      "Step 2: Simplify to get $v_2 - v_1 = u_1 - u_2$.",
+      "Step 3: Hence, relative speed of approach = relative speed of separation."
+    ]
+  },
+  {
+    "id": "q3",
+    "text": "Two bodies of masses $m_1$ and $m_2$ collide elastically. If $m_1 = m_2$ and the first body is moving with velocity $u$ while the second is at rest, what is the velocity of the first body after collision?",
+    "options": [
+      "0",
+      "$u$",
+      "$\\tfrac{u}{2}$",
+      "$2u$"
+    ],
+    "correct": "A",
+    "solution": "For equal masses in an elastic head-on collision, the moving body comes to rest and the second moves with its initial velocity.",
+    "solution_steps": [
+      "Step 1: Momentum conservation: $m u = m v_1 + m v_2$ → $u = v_1 + v_2$.",
+      "Step 2: KE conservation: $u^2 = v_1^2 + v_2^2$.",
+      "Step 3: Solving gives $v_1 = 0$, $v_2 = u$."
+    ]
+  },
+  {
+    "id": "q4",
+    "text": "In a perfectly inelastic head-on collision, which physical quantity remains conserved?",
+    "options": [
+      "Kinetic energy only",
+      "Momentum only",
+      "Both kinetic energy and momentum",
+      "Neither kinetic energy nor momentum"
+    ],
+    "correct": "B",
+    "solution": "In inelastic collisions, momentum is conserved but kinetic energy is not.",
+    "solution_steps": [
+      "Step 1: Momentum is always conserved: $m_1u_1 + m_2u_2 = (m_1 + m_2)v$.",
+      "Step 2: Kinetic energy is partially converted into other forms.",
+      "Step 3: Hence only momentum remains conserved."
+    ]
   },
   {
     "id": "q5",
-    "text": "What is the SI unit of force?",
-    "options": ["Joule", "Newton", "Watt", "Pascal"],
+    "text": "Two identical balls collide obliquely with coefficient of restitution $e = 1$. Which component of velocity is reversed after collision?",
+    "options": [
+      "Component parallel to the line of impact",
+      "Component perpendicular to the line of impact",
+      "Both components",
+      "No component"
+    ],
+    "correct": "A",
+    "solution": "For perfectly elastic oblique collision, only the normal component of velocity is reversed.",
+    "solution_steps": [
+      "Step 1: Resolve velocity into normal and tangential components.",
+      "Step 2: $v_{n2} - v_{n1} = -e(u_{n2} - u_{n1})$. For $e=1$, $v_{n} = -u_{n}$.",
+      "Step 3: Tangential component remains unchanged."
+    ]
+  },
+  {
+    "id": "q6",
+    "text": "In an oblique elastic collision with a smooth surface, what happens to the angle of reflection?",
+    "options": [
+      "It increases compared to the angle of incidence",
+      "It decreases compared to the angle of incidence",
+      "It equals the angle of incidence",
+      "It becomes zero"
+    ],
+    "correct": "C",
+    "solution": "For a perfectly elastic oblique collision with a smooth wall, the angle of reflection equals the angle of incidence.",
+    "solution_steps": [
+      "Step 1: Normal velocity reverses, tangential remains constant.",
+      "Step 2: Hence, $\\theta_i = \\theta_r$.",
+      "Step 3: Energy and momentum in the tangential direction remain same."
+    ]
+  },
+  {
+    "id": "q7",
+    "text": "A 2 kg ball moving at 6 m/s collides elastically with a 4 kg ball at rest. Find the velocity of the 2 kg ball after collision.",
+    "options": [
+      "2 m/s",
+      "-2 m/s",
+      "3 m/s",
+      "-3 m/s"
+    ],
     "correct": "B",
-    "solution": "The SI unit of force is Newton (\\(N\\))."
+    "solution": "Using 1D elastic collision formulas, $v_1 = \\frac{m_1 - m_2}{m_1 + m_2}u_1$ for $u_2 = 0$.",
+    "solution_steps": [
+      "Step 1: $v_1 = \\frac{2 - 4}{2 + 4} \\times 6 = -2$ m/s.",
+      "Step 2: Negative sign shows reversal of direction.",
+      "Step 3: The heavier body gains motion in original direction."
+    ]
+  },
+  {
+    "id": "q8",
+    "text": "In an inelastic head-on collision, if two bodies stick together after impact, what is the final velocity?",
+    "options": [
+      "$\\frac{m_1u_1 + m_2u_2}{m_1 - m_2}$",
+      "$\\frac{m_1u_1 - m_2u_2}{m_1 + m_2}$",
+      "$\\frac{m_1u_1 + m_2u_2}{m_1 + m_2}$",
+      "$\\frac{u_1 + u_2}{2}$"
+    ],
+    "correct": "C",
+    "solution": "For completely inelastic collision (bodies stick together), use momentum conservation.",
+    "solution_steps": [
+      "Step 1: $(m_1 + m_2)v = m_1u_1 + m_2u_2$.",
+      "Step 2: Hence, $v = \\frac{m_1u_1 + m_2u_2}{m_1 + m_2}$.",
+      "Step 3: Kinetic energy is not conserved."
+    ]
+  },
+  {
+    "id": "q9",
+    "text": "If coefficient of restitution between two colliding bodies is $e$, what does it represent physically?",
+    "options": [
+      "Ratio of velocities of approach to separation",
+      "Ratio of velocity of separation to velocity of approach",
+      "Ratio of momentum before and after collision",
+      "None of these"
+    ],
+    "correct": "B",
+    "solution": "Coefficient of restitution is the ratio of relative speed of separation to that of approach.",
+    "solution_steps": [
+      "Step 1: $e = \\frac{v_2 - v_1}{u_1 - u_2}$.",
+      "Step 2: For elastic collision, $e = 1$; for perfectly inelastic, $e = 0$.",
+      "Step 3: It measures the elasticity of the collision."
+    ]
+  },
+  {
+    "id": "q10",
+    "text": "Two smooth spheres undergo an oblique inelastic collision with $e = 0.5$. If the normal component of velocity before collision is 4 m/s, find it after collision.",
+    "options": [
+      "1 m/s",
+      "2 m/s",
+      "-2 m/s",
+      "-1 m/s"
+    ],
+    "correct": "C",
+    "solution": "For oblique inelastic collision, normal component after collision is reversed and multiplied by $e$.",
+    "solution_steps": [
+      "Step 1: $v_n = -e u_n$.",
+      "Step 2: $v_n = -0.5 \\times 4 = -2$ m/s.",
+      "Step 3: Direction reverses, speed reduces to half."
+    ]
   }
 ]
+
 ;
 
 
@@ -454,4 +593,5 @@ sendReport.onclick = () => {
 
 </body>
 </html>
+
 
