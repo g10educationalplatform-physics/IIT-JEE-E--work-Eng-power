@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   
   
-  <title> Quiz – 22. Perfectly Elastic Head-On Collisions, Special cases,</title>
+  <title> Quiz – 18. Perfectly Elastic Head-On Collisions, Special cases,</title>
   
   
   <style>
@@ -165,12 +165,13 @@ const Q = [
     "id": "q4",
     "text": "A massive projectile (m1=10 kg) moving at 20 m/s collides elastically with a light target (m2=2 kg) at rest. Find final velocities.",
     "options": [
-      "$v_1=16.67\\ \\text{m/s}, v_2=23.33\\ \\text{m/s}$",
       "$v_1=20, v_2=0$",
       "$v_1=0, v_2=20$",
+            "$v_1=16.67\\ \\text{m/s}, v_2=23.33\\ \\text{m/s}$",
+
       "$v_1=15, v_2=25$"
     ],
-    "correct": "A",
+    "correct": "C",
     "solution": "Elastic collision formulas:\nv1 = [(m1 - m2)/(m1 + m2)] u1 + [2 m2/(m1 + m2)] u2 = (10-2)/(10+2)*20 + 0 = 8/12*20=13.33? → recalc carefully: (10-2)/12*20=8/12*20=13.33 m/s\nv2 = [2 m1/(m1 + m2)] u1 + [(m2 - m1)/(m1 + m2)] u2 = 2*10/12*20 + (-8/12*0)=400/12≈33.33 m/s → adjust option: v1≈13.33 m/s, v2≈33.33 m/s",
     "solution_steps": [
       "Step 1: v1 = [(m1-m2)/(m1+m2)] u1 + [2 m2/(m1+m2)] u2 = (10-2)/12*20 +0 =13.33 m/s",
@@ -199,12 +200,13 @@ const Q = [
     "id": "q6",
     "text": "Two equal masses collide head-on elastically, u1 = 10 m/s, u2 = 6 m/s. Find final velocities.",
     "options": [
-      "$v_1=6, v_2=10$",
+   
       "$v_1=10, v_2=6$",
+         "$v_1=6, v_2=10$",
       "$v_1=8, v_2=8$",
       "$v_1=0, v_2=16$"
     ],
-    "correct": "A",
+    "correct": "B",
     "solution": "Equal masses, velocities exchange: v1=u2=6, v2=u1=10",
     "solution_steps": [
       "Step 1: Identify equal masses",
@@ -233,12 +235,13 @@ const Q = [
     "id": "q8",
     "text": "A 3 kg projectile moving at 4 m/s hits a 3 kg target at rest elastically. Find final velocities.",
     "options": [
-      "$v1=0, v2=4$",
+    
       "$v1=4, v2=0$",
       "$v1=2, v2=2$",
+        "$v1=0, v2=4$",
       "$v1=-4, v2=4$"
     ],
-    "correct": "A",
+    "correct": "C",
     "solution": "Equal masses → velocities exchange → v1=0, v2=4 m/s",
     "solution_steps": [
       "Step 1: m1=m2=3 kg, u1=4, u2=0",
@@ -299,12 +302,14 @@ const Q = [
     "id": "q12",
     "text": "If two equal masses collide head-on elastically and second is at rest, what is relative velocity after collision?",
     "options": [
-      "$v2-v1 = u1$",
       "$v2-v1 = 0$",
       "$v2-v1 = -u1$",
-      "$v2-v1 = 2u1$"
+      "$v2-v1 = 2u1$",
+            "$v2-v1 = u1$",
+      
+
     ],
-    "correct": "A",
+    "correct": "D",
     "solution": "v1=0, v2=u1 → v2-v1=u1",
     "solution_steps": [
       "Step 1: Identify velocities after collision",
@@ -331,12 +336,13 @@ const Q = [
     "id": "q14",
     "text": "Two vehicles, equal mass, head-on elastic collision, moving at 15 m/s and -5 m/s. Find velocities after collision.",
     "options": [
-      "$v1=-5, v2=15$",
+ 
       "$v1=15, v2=-5$",
+           "$v1=-5, v2=15$",
       "$v1=5, v2=5$",
       "$v1=0, v2=10$"
     ],
-    "correct": "A",
+    "correct": "B",
     "solution": "Velocities exchange: v1=-5, v2=15",
     "solution_steps": [
       "Step 1: m1=m2, u1=15, u2=-5",
@@ -673,3 +679,4 @@ sendReport.onclick = () => {
 
 </body>
 </html>
+
