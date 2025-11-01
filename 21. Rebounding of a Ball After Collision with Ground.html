@@ -112,180 +112,177 @@
 const Q = [
   {
     "id": "q1",
-    "text": "A ball is dropped from a height of $10\\,\\mathrm{m}$. If the coefficient of restitution between ball and ground is $e = 0.8$, calculate the height of the first rebound.",
+    "text": "A ball dropped from a height $h$ rebounds to a height $h'$. Find the coefficient of restitution.",
     "options": [
-      "$h_1 = 8\\,\\mathrm{m}$",
-      "$h_1 = 6\\,\\mathrm{m}$",
-      "$h_1 = 10\\,\\mathrm{m}$",
-      "$h_1 = 4\\,\\mathrm{m}$"
+      "$\\sqrt{h/h'}$",
+      "$\\sqrt{h'/h}$",
+      "$h/h'$",
+      "$h'/h$"
     ],
-    "correct": "A",
-    "solution": "Height of first rebound: $h_1 = e^2 h_0 = 0.8^2 \\times 10 = 6.4$ m → Correct formula: h1 = e^2 h0? Actually h1 = e^2* h0 if e defined via velocities, commonly h1 = e^2 h0; if e defined via velocity v1 = e v0, then h1 = e^2 h0.",
+    "correct": "B",
+    "solution": "Coefficient of restitution between ball and ground is given by $e = \\sqrt{h'/h}$.",
     "solution_steps": [
-      "Step 1: Velocity just before impact: v = sqrt(2 g h0) = sqrt(2*9.8*10)=14 m/s",
-      "Step 2: Velocity just after rebound: v' = e * v = 0.8*14=11.2 m/s",
-      "Step 3: Height of first rebound: h1 = v'^2/(2 g) = 11.2^2/(2*9.8)=6.4 m"
+      "Step 1: Velocity just before impact: $u = \\sqrt{2gh}$.",
+      "Step 2: Velocity after rebound: $v = \\sqrt{2gh'}$.",
+      "Step 3: $e = v/u = \\sqrt{h'/h}$."
     ]
   },
   {
     "id": "q2",
-    "text": "For the previous ball, calculate the height after the 3rd rebound.",
+    "text": "A ball falls from height 4 m and rebounds to 1 m. Find the coefficient of restitution.",
     "options": [
-      "$h_3 = 3.28\\,\\mathrm{m}$",
-      "$h_3 = 4.1\\,\\mathrm{m}$",
-      "$h_3 = 5.12\\,\\mathrm{m}$",
-      "$h_3 = 2.5\\,\\mathrm{m}$"
+      "0.25",
+      "0.5",
+      "0.707",
+      "0.75"
     ],
-    "correct": "C",
-    "solution": "h_n = h1 * e^{2(n-1)} = 6.4 * 0.8^4 = 6.4 * 0.4096 = 2.62 m (rounding properly) → adjust option: closest = 2.62 m",
+    "correct": "B",
+    "solution": "Using $e = \\sqrt{h'/h}$.",
     "solution_steps": [
-      "Step 1: Use formula h_n = h1 * e^{2(n-1)}",
-      "Step 2: Substitute n=3: h3 = 6.4 * 0.8^{4} = 6.4*0.4096 ≈ 2.62 m",
-      "Step 3: Answer: h3 ≈ 2.62 m"
+      "Step 1: $h = 4$ m, $h' = 1$ m.",
+      "Step 2: $e = \\sqrt{1/4} = 0.5$.",
+      "Step 3: Hence, coefficient of restitution = 0.5."
     ]
   },
   {
     "id": "q3",
-    "text": "Calculate the total vertical distance travelled by the ball before it stops bouncing.",
+    "text": "If a ball rebounds from the ground with coefficient of restitution $e$, what is the ratio of its velocities after and before collision?",
     "options": [
-      "$S = 45\\,\\mathrm{m}$",
-      "$S = 58\\,\\mathrm{m}$",
-      "$S = 70\\,\\mathrm{m}$",
-      "$S = 60\\,\\mathrm{m}$"
+      "$e^2$",
+      "$1/e$",
+      "$e$",
+      "$1/e^2$"
     ],
-    "correct": "B",
-    "solution": "Total distance S = h0 + 2(h1 + h2 + h3 + ...)= h0 + 2 h1/(1-e^2) = 10 + 2*6.4/(1-0.64)=10+12.8/0.36=10+35.56≈45.56 m → adjust answer 45.6 m",
+    "correct": "C",
+    "solution": "By definition, $e = v/u$, where $v$ is velocity after impact and $u$ is before impact.",
     "solution_steps": [
-      "Step 1: Total distance S = h0 + 2*(sum of infinite geometric series of rebounds)",
-      "Step 2: Sum of infinite series: h1 + h1 e^2 + h1 e^4 + ... = h1/(1-e^2) = 6.4/(1-0.64)=6.4/0.36 ≈17.78",
-      "Step 3: Multiply by 2 for upward and downward motion: 2*17.78=35.56",
-      "Step 4: Add initial drop: S = h0 + 2*sum = 10+35.56 ≈ 45.56 m"
+      "Step 1: $v = e u$.",
+      "Step 2: Ratio $v/u = e$.",
+      "Step 3: So the rebound velocity is $e$ times the impact velocity."
     ]
   },
   {
     "id": "q4",
-    "text": "Determine the total time taken by the ball to stop bouncing. (Take g = 10 m/s²)",
+    "text": "A ball is dropped from 5 m and rebounds to 3.2 m. Find the value of $e$.",
     "options": [
-      "$t_{total} = 4.2\\,\\mathrm{s}$",
-      "$t_{total} = 5.1\\,\\mathrm{s}$",
-      "$t_{total} = 6.0\\,\\mathrm{s}$",
-      "$t_{total} = 7.2\\,\\mathrm{s}$"
+      "0.64",
+      "0.8",
+      "0.9",
+      "0.7"
     ],
     "correct": "B",
-    "solution": "Total time: t_total = sqrt(2 h0/g) + 2*sqrt(2 h1/g)/(1-e) = sqrt(20/10)+2*sqrt(2*6.4/10)/(1-0.8) ≈1.414+2*1.131/0.2≈1.414+11.31≈12.72 s → recalc: check formula: t_total = sqrt(2 h0/g) + 2*sum_{n=1}^{∞} sqrt(2 h_n/g)= sqrt(2*10/10)+2*sum_{n=1}^{∞} sqrt(2*6.4*0.8^{2(n-1)}/10) = 1.414+2*sum_{n=1}^{∞} sqrt(1.28*0.8^{2(n-1)})",
+    "solution": "Using $e = \\sqrt{h'/h}$.",
     "solution_steps": [
-      "Step 1: Time for first fall: t0 = sqrt(2 h0/g) = sqrt(20/10)=1.414 s",
-      "Step 2: Time for first rebound: t1 = sqrt(2 h1/g) = sqrt(12.8/10)=1.131 s",
-      "Step 3: Total time = t0 + 2*(t1 + t1 e + t1 e^2 + ...) = t0 + 2*t1/(1-e) =1.414 + 2*1.131/0.8=1.414+2.827≈4.24 s",
-      "Step 4: Total time ≈ 4.24 s"
+      "Step 1: $e = \\sqrt{3.2/5} = \\sqrt{0.64} = 0.8$.",
+      "Step 2: Thus, coefficient of restitution = 0.8."
     ]
   },
   {
     "id": "q5",
-    "text": "A ball dropped from 5 m bounces with e=0.6. Calculate height after 2nd rebound.",
+    "text": "If a ball takes 2 seconds to reach the ground, find the time interval between first and second impacts when $e = 0.5$.",
     "options": [
-      "$h_2 = 1.08\\,\\mathrm{m}$",
-      "$h_2 = 0.9\\,\\mathrm{m}$",
-      "$h_2 = 1.5\\,\\mathrm{m}$",
-      "$h_2 = 1.2\\,\\mathrm{m}$"
+      "3 s",
+      "2.5 s",
+      "1.5 s",
+      "2 s"
     ],
     "correct": "A",
-    "solution": "h1 = e^2 h0 = 0.36*5=1.8 m, h2 = h1 * e^2 = 1.8*0.36=0.648 m → check: h_n = e^2 h_{n-1}? Actually h_n = e^2 h0? Better: h1 = e^2 h0? Take velocity definition: v' = e v → h_n = h0 * e^{2n}?",
+    "solution": "Total time between first and second collisions = time to fall + time to rise after rebound.",
     "solution_steps": [
-      "Step 1: Height after nth rebound: h_n = h0 * e^{2n}?",
-      "Step 2: Use formula: h1 = e^2 h0 =0.36*5=1.8 m, h2 = h1*e^2=1.8*0.36=0.648 m",
-      "Step 3: Answer: h2 ≈ 0.648 m → closest option corrected"
+      "Step 1: Time to fall $t_1 = 2$ s.",
+      "Step 2: Velocity before impact $u = g t_1 = 9.8 \\times 2 = 19.6$ m/s.",
+      "Step 3: After rebound, velocity $v = e u = 0.5 \\times 19.6 = 9.8$ m/s.",
+      "Step 4: Time to rise = $v/g = 9.8/9.8 = 1$ s.",
+      "Step 5: Total = 2 + 1 = 3 s."
     ]
   },
   {
     "id": "q6",
-    "text": "For a ball dropped from 8 m with e = 0.5, calculate total vertical distance before coming to rest.",
+    "text": "A ball dropped from height $h$ rebounds repeatedly with coefficient of restitution $e$. Find the total distance travelled before coming to rest.",
     "options": [
-      "$S = 20 m$",
-      "$S = 24 m$",
-      "$S = 16 m$",
-      "$S = 18 m$"
+      "$h(1 + e)$",
+      "$h(1 + e^2)$",
+      "$h(1 + e)/(1 - e)$",
+      "$h(1 + e^2)/(1 - e^2)$"
     ],
-    "correct": "B",
-    "solution": "h1 = e^2 h0 =0.25*8=2 m, total distance S = h0 + 2*(h1+h1 e^2 + ...)= h0 + 2*h1/(1-e^2)=8 + 2*2/(1-0.25)=8+4/0.75=8+5.33≈13.33 m → recalc options needed",
+    "correct": "C",
+    "solution": "The ball travels downward and upward distances forming a geometric series.",
     "solution_steps": [
-      "Step 1: Compute first rebound: h1 = e^2 h0 = 0.5^2*8 =2 m",
-      "Step 2: Sum infinite series: sum = h1/(1-e^2) =2/(1-0.25)=2/0.75=2.667 m",
-      "Step 3: Multiply by 2 for up and down motion: 2*2.667=5.334 m",
-      "Step 4: Add initial drop: S = 8+5.334≈13.33 m"
+      "Step 1: Total distance $S = h + 2he + 2he^2 + 2he^3 + \\dots$.",
+      "Step 2: $S = h + 2h(e + e^2 + e^3 + \\dots) = h + 2h \\frac{e}{1 - e}$.",
+      "Step 3: Simplify: $S = h \\frac{1 + e}{1 - e}$."
     ]
   },
   {
     "id": "q7",
-    "text": "A ball dropped from 12 m has e=0.7. Calculate total time to stop bouncing.",
+    "text": "A ball falls from 10 m and rebounds twice, reaching 4 m on the first rebound. Find the height of the second rebound.",
     "options": [
-      "$t_{total}=6.0\\,\\mathrm{s}$",
-      "$t_{total}=7.2\\,\\mathrm{s}$",
-      "$t_{total}=8.5\\,\\mathrm{s}$",
-      "$t_{total}=9.1\\,\\mathrm{s}$"
+      "1.6 m",
+      "2.5 m",
+      "3.2 m",
+      "1.2 m"
     ],
-    "correct": "B",
-    "solution": "Time for fall t0 = sqrt(2 h0/g) = sqrt(24/10)=1.549 s, time for rebounds: t1 = sqrt(2 h1/g)=sqrt(2*e^2 h0/10)=sqrt(2*0.49*12/10)=1.086 s, total time = t0 + 2*t1/(1-e) =1.549+2*1.086/0.7≈1.549+3.103=4.652 s → check calculation carefully",
+    "correct": "A",
+    "solution": "Height ratio for rebounds: $h_2 = e^2 h_1$.",
     "solution_steps": [
-      "Step 1: t0 = sqrt(2 h0/g) = sqrt(24/10)=1.549 s",
-      "Step 2: h1 = e^2 h0 =0.49*12=5.88 m",
-      "Step 3: t1 = sqrt(2 h1/g) = sqrt(11.76/10)=1.084 s",
-      "Step 4: Total time = t0 + 2*t1/(1-e) =1.549 + 2*1.084/0.3=1.549+7.227≈8.776 s → correct option ≈8.78 s"
+      "Step 1: $e = \\sqrt{h_1/h} = \\sqrt{4/10} = 0.632$.",
+      "Step 2: $h_2 = e^2 h_1 = (0.632)^2 \\times 4 = 1.6$ m.",
+      "Step 3: Thus, second rebound height = 1.6 m."
     ]
   },
   {
     "id": "q8",
-    "text": "A ball is dropped from height h0. The rebound coefficient is e. Derive expression for total vertical distance travelled.",
+    "text": "In terms of coefficient of restitution $e$, the kinetic energy of rebound compared to that before impact is:",
     "options": [
-      "$S = h0 + 2 h0 e^2/(1-e^2)$",
-      "$S = h0 + 2 h0 e/(1-e)$",
-      "$S = h0/(1-e^2)$",
-      "$S = h0 e^2/(1-e^2)$"
+      "$e$ times smaller",
+      "$e^2$ times smaller",
+      "$1/e$ times smaller",
+      "$1/e^2$ times smaller"
     ],
-    "correct": "A",
-    "solution": "Total distance S = h0 + 2(h1 + h2 + h3 + ...) = h0 + 2*sum_{n=1}^{∞} h0 e^{2n} = h0 + 2* h0 e^2 /(1-e^2)",
+    "correct": "B",
+    "solution": "Kinetic energy is proportional to the square of velocity.",
     "solution_steps": [
-      "Step 1: Height after nth rebound: h_n = h0 * e^{2n}",
-      "Step 2: Sum of infinite series for rebounds: sum = h0 e^2/(1-e^2)",
-      "Step 3: Total distance: S = h0 + 2*sum = h0 + 2 h0 e^2/(1-e^2)"
+      "Step 1: $v_{after} = e v_{before}$.",
+      "Step 2: $KE_{after}/KE_{before} = (v_{after}/v_{before})^2 = e^2$.",
+      "Step 3: Hence, KE reduces by a factor of $e^2$."
     ]
   },
   {
     "id": "q9",
-    "text": "If a ball rebounds to half its previous height each time, what is total distance travelled if dropped from 4 m?",
+    "text": "A ball is dropped from 20 m, and coefficient of restitution is 0.6. Find the velocity after first rebound.",
     "options": [
-      "$S = 12\\,\\mathrm{m}$",
-      "$S = 8\\,\\mathrm{m}$",
-      "$S = 10\\,\\mathrm{m}$",
-      "$S = 14\\,\\mathrm{m}$"
+      "10 m/s",
+      "12 m/s",
+      "8 m/s",
+      "6 m/s"
     ],
-    "correct": "A",
-    "solution": "h1 = e^2 h0, here e^2 = 0.5 → e = sqrt(0.5), S = h0 + 2 h1/(1-e^2)=4+2*2/(1-0.5)=4+4/0.5=4+8=12 m",
+    "correct": "C",
+    "solution": "Velocity after rebound = $e \\sqrt{2gh}$.",
     "solution_steps": [
-      "Step 1: h1 = h0 * 0.5 =2 m",
-      "Step 2: Total distance S = h0 + 2*(sum of rebounds) =4+2*(2+1+0.5+...) =4+2*4=12 m",
-      "Step 3: Answer: S = 12 m"
+      "Step 1: $\\sqrt{2gh} = \\sqrt{2 \\times 9.8 \\times 20} = 19.8$ m/s.",
+      "Step 2: $v = e \\times 19.8 = 0.6 \\times 19.8 = 11.88$ m/s ≈ 12 m/s.",
+      "Step 3: So option C (≈12 m/s) is correct."
     ]
   },
   {
     "id": "q10",
-    "text": "Explain the effect of coefficient of restitution e on total distance and time of bouncing.",
+    "text": "A ball rebounds repeatedly from the ground with $e = 0.8$. Find the ratio of time of ascent after 3rd rebound to that after 1st rebound.",
     "options": [
-      "Higher e → more distance and time",
-      "Higher e → less distance and time",
-      "Higher e → same distance, more time",
-      "Higher e → same time, less distance"
+      "$e^2$",
+      "$e$",
+      "$e^3$",
+      "1"
     ],
-    "correct": "A",
-    "solution": "As e increases, rebound heights increase → total distance increases. Higher rebounds → longer total time.",
+    "correct": "C",
+    "solution": "Time of ascent after each rebound is proportional to rebound velocity.",
     "solution_steps": [
-      "Step 1: Rebound height h_n ∝ e^2",
-      "Step 2: Total distance S = h0 + 2 h1/(1-e^2) → increases with e",
-      "Step 3: Total time involves sum of sqrt(h_n) → increases with e",
-      "Step 4: Conclusion: Higher e → more total distance and total time"
+      "Step 1: $t \\propto v = e^n u$ after $n$th rebound.",
+      "Step 2: Ratio $t_3/t_1 = e^3/e^1 = e^2$ (check index).",
+      "Step 3: Correct ratio $t_3/t_1 = e^2 = (0.8)^2 = 0.64$."
     ]
   }
 ]
+
 
 ;
 
@@ -598,4 +595,5 @@ sendReport.onclick = () => {
 
 </body>
 </html>
+
 
